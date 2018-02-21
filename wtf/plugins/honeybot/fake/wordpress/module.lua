@@ -14,7 +14,7 @@ function send_response(state,headers,content)
             ngx.header[key] = val
         end
     end
-    ngx.say(content)
+    ngx.print(content)
     ngx.exit(ngx.HTTP_OK)
 end
 
@@ -28,6 +28,7 @@ function _M:access(...)
     local headers = {}
     local files = cjson.decode(io.open(path.."files.json","rb"):read "*a")
     local dirs = cjson.decode(io.open(path.."dirs.json","rb"):read "*a")
+    ngx.req.set_header("Accept-Encoding", "")
 
     if files[ngx.var.uri] then
         for md5,versions in pairs(files[ngx.var.uri]) do
@@ -89,11 +90,8 @@ function _M:body_filter(...)
     local version = self:get_optional_parameter('version')
     local path = self:get_optional_parameter('path')
 
-    replacestr = '\n<meta name="generator" content="WordPress '.. version .. '" />\n<!-- /wp-content/themes/twentyfourteen/\n/wp-content/plugins/theme-my-login/style.css\n-->\n</head>' 
-    ngx.arg[1] = ngx.re.gsub(ngx.arg[1],'<meta name="generator"[^>]*>', "") 
-    ngx.arg[1] = ngx.re.gsub(ngx.arg[1],'</head>', replacestr) 
-    ngx.arg[1] = ngx.re.gsub(ngx.arg[1],'ver=[0-9.]*', 'ver=' .. version) 
-    ngx.arg[1] = ngx.re.gsub(ngx.arg[1],'[.]js"', '.js?ver=' .. version .. '"') 
+    ngx.arg[1] = ngx.re.gsub(ngx.arg[1],'<meta name="generator" content="Wordpress[^>]*>', "")
+    ngx.arg[1] = ngx.re.gsub(ngx.arg[1],'<head>', '<head>\n<meta name="generator" content="WordPress '.. version .. '" />\n<!--\n/wp-content/themes/twentyfourteen/\n/wp-content/plugins/theme-my-login/style.css\n-->')
     return self
 end
 
