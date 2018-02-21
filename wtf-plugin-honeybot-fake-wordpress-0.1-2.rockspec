@@ -1,5 +1,5 @@
 package = "wtf-plugin-honeybot-fake-wordpress"
-version = "0.1-1"
+version = "0.1-2"
 source = {
    url = "git+https://github.com/honeybot/wtf-plugin-honeybot-fake-wordpress",
    tag = "0.1"
