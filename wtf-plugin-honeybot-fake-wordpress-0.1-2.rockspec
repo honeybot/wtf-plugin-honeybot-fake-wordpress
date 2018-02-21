@@ -1,15 +1,15 @@
 package = "wtf-plugin-honeybot-fake-wordpress"
-version = "0.1-2"
+version = "0.2-1"
 source = {
    url = "git+https://github.com/honeybot/wtf-plugin-honeybot-fake-wordpress",
-   tag = "0.1"
+   tag = "0.2"
 }
 description = {
    homepage = "https://github.com/honeybot/wtf-plugin-honeybot-fake-wordpress",
    license = "MIT"
 }
 dependencies = {
-   "wtf-plugin-honeybot-fake-wordpress-data >= 0.1",
+   "wtf-plugin-honeybot-fake-wordpress-data >= 0.2",
    "lua-cjson >= 2.1",
    "lua-resty-reqargs >= 1.4"
 }
