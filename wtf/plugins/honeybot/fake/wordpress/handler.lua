@@ -8,6 +8,7 @@ local _M = Plugin:extend()
 _M.name = "honeybot.fake.wordpress"
 
 function send_response(state,headers,content)
+    ngx.ctx.response_from_lua = 1
     ngx.status = state
     if headers then
         for key,val in pairs(headers) do
@@ -90,8 +91,10 @@ function _M:body_filter(...)
     local version = self:get_optional_parameter('version')
     local path = self:get_optional_parameter('path')
 
-    ngx.arg[1] = ngx.re.gsub(ngx.arg[1],'<meta name="generator" content="Wordpress[^>]*>', "")
-    ngx.arg[1] = ngx.re.gsub(ngx.arg[1],'<head>', '<head>\n<meta name="generator" content="WordPress '.. version .. '" />\n<!--\n/wp-content/themes/twentyfourteen/\n/wp-content/plugins/theme-my-login/style.css\n-->')
+    if not ngx.ctx.response_from_lua then
+        ngx.arg[1] = ngx.re.gsub(ngx.arg[1],'<meta name="generator" content="Wordpress[^>]*>', "")
+        ngx.arg[1] = ngx.re.gsub(ngx.arg[1],'<head>', '<head>\n<meta name="generator" content="WordPress '.. version .. '" />\n<!--\n/wp-content/themes/twentyfourteen/\n/wp-content/plugins/theme-my-login/style.css\n-->')
+    end
     return self
 end
 
