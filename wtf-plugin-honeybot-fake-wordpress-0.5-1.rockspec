@@ -1,8 +1,8 @@
 package = "wtf-plugin-honeybot-fake-wordpress"
-version = "0.4-1"
+version = "0.5-1"
 source = {
    url = "git+https://github.com/honeybot/wtf-plugin-honeybot-fake-wordpress",
-   tag = "0.4"
+   tag = "0.5"
 }
 description = {
    homepage = "https://github.com/honeybot/wtf-plugin-honeybot-fake-wordpress",
@@ -16,6 +16,6 @@ dependencies = {
 build = {
    type = "builtin",
    modules = {
-      ["wtf.plugins.honeybot.fake.wordpress"] = "wtf/plugins/honeybot/fake/wordpress/handler.lua"
+      ["wtf.plugins.honeybot.fake.wordpress.handler"] = "wtf/plugins/honeybot/fake/wordpress/handler.lua"
    }
 }
