@@ -25,7 +25,11 @@ function _M:access(...)
     local version = self:get_optional_parameter('version')
     local path = self:get_optional_parameter('path')
     local filename = path .. version .. "/" ..ngx.var.uri
-    local get,post,files = require("resty.reqargs")()
+	if not ngx.ctx.get then
+		ngx.ctx.get, ngx.ctx.post, ngx.ctx.files = require("resty.reqargs")()
+    end
+    local get = ngx.ctx.get
+	local post = ngx.ctx.post
     local headers = {}
     local files = cjson.decode(io.open(path.."files.json","rb"):read "*a")
     local dirs = cjson.decode(io.open(path.."dirs.json","rb"):read "*a")
